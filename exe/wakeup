@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require "wakeup"
+
+hostname, mac = ARGV
+
+if hostname.nil?
+  puts "Missing hostname\nUsage: wakeup hostname [MAC Address]"
+  exit 1
+end
+
+mac ||= Wakeup::lookup_mac(hostname)
+if mac.nil? || mac == ""
+  puts ["Unable to resolve hostname '#{hostname}' or discover MAC address for hostname.",
+    'If hostname is correct try wakeup command with hostname and MAC address as such:',
+    "wakeup #{hostname} 00:11:22:AA:BB:CC"].join("\n")
+  exit 1
+end
+
+unless Wakeup::mac_address_valid?(mac)
+  puts "Invalid MAC address\nUsage: wakeup hostname [MAC Address]"
+  exit 1
+end
+
+Wakeup::Waker.instance.wake(hostname, mac)
