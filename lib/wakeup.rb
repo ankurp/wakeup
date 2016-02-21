@@ -2,12 +2,13 @@ require "wakeup/version"
 require "socket"
 
 module Wakeup
+  extend self
 
-  def self.mac_address_valid?(mac)
+  def mac_address_valid?(mac)
     mac =~ /^([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}$/
   end
 
-  def self.lookup_mac(hostname)
+  def lookup_mac(hostname)
     `arp #{hostname} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'`
   end
 
