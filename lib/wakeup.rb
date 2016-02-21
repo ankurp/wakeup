@@ -3,12 +3,12 @@ require "socket"
 
 module Wakeup
 
-  def mac_address_valid?(mac)
+  def self.mac_address_valid?(mac)
     mac =~ /^([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}$/
   end
 
-  def lookup_mac(hostname)
-    system("arp #{hostname} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'")
+  def self.lookup_mac(hostname)
+    `arp #{hostname} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'`
   end
 
   class Waker

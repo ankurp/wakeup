@@ -22,4 +22,4 @@ unless Wakeup::mac_address_valid?(mac)
   exit 1
 end
 
-Wakeup::Waker.instance.wake(hostname, mac)
+Wakeup::Waker.wake(hostname, mac)
